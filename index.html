@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Your Name â€” Portfolio</title>
+  <title>Your Name ¡X Portfolio</title>
 
   <style>
     * {
@@ -158,6 +158,7 @@
       border: 1px solid var(--border);
       transition: .25s;
       font-size: 14px;
+      cursor: pointer;
     }
 
     .button.primary {
@@ -215,6 +216,11 @@
       flex-direction: column;
       justify-content: space-between;
       transition: .3s;
+    }
+
+    .project.clickable {
+      cursor: pointer;
+      position: relative;
     }
 
     .project:hover {
@@ -314,6 +320,100 @@
       justify-content: space-between;
     }
 
+    /* Modal (¼u¥Xµøµ¡¼Ë¦¡) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 40px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 28px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .modal-body h3 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .modal-body .subtitle {
+      color: var(--accent2);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      display: block;
+    }
+
+    .modal-body section-block {
+      margin-bottom: 25px;
+    }
+
+    .modal-body h4 {
+      font-size: 18px;
+      color: #fff;
+      margin: 20px 0 10px 0;
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
+    }
+
+    .modal-body p, .modal-body ul {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .modal-body ul {
+      padding-left: 20px;
+    }
+
     /* Mobile */
     @media (max-width: 700px) {
       .nav-links {
@@ -336,6 +436,10 @@
       footer {
         flex-direction: column;
         gap: 5px;
+      }
+
+      .modal-card {
+        padding: 25px;
       }
     }
   </style>
@@ -366,12 +470,12 @@
       </h1>
 
       <p>
-        ä¸€åæ­£åœ¨æ¢ç´¢è¨­è¨ˆã€ç§‘æŠ€èˆ‡å‰µæ„äº¤å‰é ˜åŸŸçš„å¤§å­¸ç”Ÿã€‚
-        æˆ‘å–œæ­¡æŠŠæƒ³æ³•è®Šæˆå¯¦éš›çš„ä½œå“ï¼Œä¸¦æŒçºŒå­¸ç¿’æ–°çš„å·¥å…·èˆ‡æŠ€è¡“ã€‚
+        ¤@¦W¥¿¦b±´¯Á³]­p¡B¬ì§Ş»P³Ğ·N¥æ¤e»â°ìªº¤j¾Ç¥Í¡C
+        §Ú³ßÅw§â·QªkÅÜ¦¨¹ê»Úªº§@«~¡A¨Ã«ùÄò¾Ç²ß·sªº¤u¨ã»P§Ş³N¡C
       </p>
 
       <div class="buttons">
-        <a href="#projects" class="button primary">View My Work â†’</a>
+        <a href="#projects" class="button primary">View My Work ¡÷</a>
         <a href="#contact" class="button">Let's Connect</a>
       </div>
 
@@ -382,7 +486,7 @@
   <!-- ABOUT -->
   <section id="about">
 
-    <div class="eyebrow">01 â€” About Me</div>
+    <div class="eyebrow">01 ¡X About Me</div>
 
     <h2>Curious.<br>Creative.<br><span class="gradient">Always Learning.</span></h2>
 
@@ -390,15 +494,15 @@
 
       <div class="about-text">
         <p>
-          æˆ‘ç›®å‰æ˜¯ä¸€å¹´ç´šå¤§å­¸ç”Ÿï¼Œæ­£åœ¨å»ºç«‹è‡ªå·±çš„è¨­è¨ˆèˆ‡æŠ€è¡“åŸºç¤ã€‚
-          æ¯”èµ·åªå­¸ç¿’ç†è«–ï¼Œæˆ‘æ›´å–œæ­¡é€éå¯¦éš›å°ˆæ¡ˆä¾†ç†è§£å•é¡Œã€‚
+          §Ú¥Ø«e¬O¤@¦~¯Å¤j¾Ç¥Í¡A¥¿¦b«Ø¥ß¦Û¤vªº³]­p»P§Ş³N°òÂ¦¡C
+          ¤ñ°_¥u¾Ç²ß²z½×¡A§Ú§ó³ßÅw³z¹L¹ê»Ú±M®×¨Ó²z¸Ñ°İÃD¡C
         </p>
 
         <br>
 
         <p>
-          æˆ‘çš„é•·æœŸç›®æ¨™ï¼Œæ˜¯åœ¨å¤§å­¸å››å¹´é–“ç´¯ç©è¶³å¤ å¤šçš„ä½œå“ï¼Œ
-          æœ€çµ‚æˆç‚ºèƒ½å¤ ç¨ç«‹è§£æ±ºå•é¡Œã€åŒæ™‚å…·å‚™è¨­è¨ˆæ€ç¶­èˆ‡æŠ€è¡“èƒ½åŠ›çš„äººã€‚
+          §Úªºªø´Á¥Ø¼Ğ¡A¬O¦b¤j¾Ç¥|¦~¶¡²Ö¿n¨¬°÷¦hªº§@«~¡A
+          ³Ì²×¦¨¬°¯à°÷¿W¥ß¸Ñ¨M°İÃD¡B¦P®É¨ã³Æ³]­p«äºû»P§Ş³N¯à¤Oªº¤H¡C
         </p>
       </div>
 
@@ -424,7 +528,7 @@
   <!-- PROJECTS -->
   <section id="projects">
 
-    <div class="eyebrow">02 â€” Selected Work</div>
+    <div class="eyebrow">02 ¡X Selected Work</div>
 
     <h2>Things I've<br><span class="gradient">Made.</span></h2>
 
@@ -436,8 +540,8 @@
           <h3>Personal Website</h3>
 
           <p>
-            æˆ‘çš„ç¬¬ä¸€å€‹å€‹äººç¶²ç«™ï¼Œå˜—è©¦å°‡è¦–è¦ºè¨­è¨ˆã€
-            HTML èˆ‡ CSS çµåˆæˆä¸€å€‹å®Œæ•´çš„æ•¸ä½ä½œå“ã€‚
+            §Úªº²Ä¤@­Ó­Ó¤Hºô¯¸¡A¹Á¸Õ±NµøÄ±³]­p¡B
+            HTML »P CSS µ²¦X¦¨¤@­Ó§¹¾ãªº¼Æ¦ì§@«~¡C
           </p>
         </div>
 
@@ -448,21 +552,22 @@
         </div>
       </article>
 
-
-      <article class="project">
+      <!-- ·s¼W/­×§ï¡G¼Æ¦ì¬ì§Ş·§½×¥d¤ù -->
+      <article class="project clickable" id="digital-tech-card">
         <div>
           <div class="project-number">PROJECT 02</div>
-          <h3>Future Project</h3>
+          <h3>¼Æ¦ì¬ì§Ş·§½×</h3>
 
           <p>
-            é€™è£¡å°‡æ”¾å…¥æˆ‘æœªä¾†å®Œæˆçš„ç¬¬ä¸€å€‹æ­£å¼å°ˆæ¡ˆï¼Œ
-            è¨˜éŒ„å¾å•é¡Œç™¼ç¾ã€ç ”ç©¶åˆ°æœ€å¾Œæˆæœçš„å®Œæ•´éç¨‹ã€‚
+            ±´¯Á²{¥N¸ê°T¬ì§Şªº®Ö¤ß·§©À¡A±q­pºâ¾÷µ²ºc¡Bºô¸ô¶Ç¿é¨ì¤H¤u´¼¼zÀ³¥Î»Pºô­¶¹ê§@¡C
+            ¡]ÂIÀ»ÀËµø½Òµ{¸Ô²Ó¤º®e ¡ù¡^
           </p>
         </div>
 
         <div class="tags">
-          <span class="tag">Coming Soon</span>
-          <span class="tag">Research</span>
+          <span class="tag">Coursework</span>
+          <span class="tag">Digital Tech</span>
+          <span class="tag">AI & Cloud</span>
         </div>
       </article>
 
@@ -473,8 +578,8 @@
           <h3>Creative Experiment</h3>
 
           <p>
-            ä¸€å€‹ç”¨ä¾†æ¸¬è©¦æ–°æƒ³æ³•çš„å¯¦é©—æ€§ä½œå“ã€‚
-            æˆ‘ç›¸ä¿¡å¥½çš„ä½œå“ä¾†è‡ªå¤§é‡å˜—è©¦èˆ‡è¿­ä»£ã€‚
+            ¤@­Ó¥Î¨Ó´ú¸Õ·s·Qªkªº¹êÅç©Ê§@«~¡C
+            §Ú¬Û«H¦nªº§@«~¨Ó¦Û¤j¶q¹Á¸Õ»P­¡¥N¡C
           </p>
         </div>
 
@@ -491,13 +596,13 @@
           <h3>More To Come</h3>
 
           <p>
-            é€™å€‹ä½œå“é›†æœƒéš¨è‘—æˆ‘çš„å¤§å­¸ç”Ÿæ´»æŒçºŒæ›´æ–°ã€‚
-            å››å¹´å¾Œï¼Œå¸Œæœ›é€™è£¡èƒ½å±•ç¤ºçœŸæ­£ä»£è¡¨æˆ‘çš„ä½œå“ã€‚
+            ³o­Ó§@«~¶°·|ÀHµÛ§Úªº¤j¾Ç¥Í¬¡«ùÄò§ó·s¡C
+            ¥|¦~«á¡A§Æ±æ³o¸Ì¯à®i¥Ü¯u¥¿¥Nªí§Úªº§@«~¡C
           </p>
         </div>
 
         <div class="tags">
-          <span class="tag">2026 â†’ 2030</span>
+          <span class="tag">2026 ¡÷ 2030</span>
           <span class="tag">In Progress</span>
         </div>
       </article>
@@ -509,41 +614,41 @@
   <!-- JOURNEY -->
   <section id="journey">
 
-    <div class="eyebrow">03 â€” My Journey</div>
+    <div class="eyebrow">03 ¡X My Journey</div>
 
     <h2>The next<br><span class="gradient">four years.</span></h2>
 
     <div class="timeline">
 
       <div class="timeline-item">
-        <div class="timeline-year">YEAR 01 â€” 2026</div>
+        <div class="timeline-year">YEAR 01 ¡X 2026</div>
         <h3>Build the Foundation</h3>
         <p>
-          å­¸ç¿’è¨­è¨ˆã€ç¨‹å¼èˆ‡åŸºç¤å·¥å…·ï¼Œå®Œæˆç¬¬ä¸€æ‰¹å€‹äººä½œå“ã€‚
+          ¾Ç²ß³]­p¡Bµ{¦¡»P°òÂ¦¤u¨ã¡A§¹¦¨²Ä¤@§å­Ó¤H§@«~¡C
         </p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-year">YEAR 02 â€” 2027</div>
+        <div class="timeline-year">YEAR 02 ¡X 2027</div>
         <h3>Explore & Experiment</h3>
         <p>
-          é–‹å§‹åƒèˆ‡åœ˜éšŠå°ˆæ¡ˆã€ç«¶è³½èˆ‡æ›´å¤šè·¨é ˜åŸŸå¯¦é©—ã€‚
+          ¶}©l°Ñ»P¹Î¶¤±M®×¡BÄvÁÉ»P§ó¦h¸ó»â°ì¹êÅç¡C
         </p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-year">YEAR 03 â€” 2028</div>
+        <div class="timeline-year">YEAR 03 ¡X 2028</div>
         <h3>Real World Projects</h3>
         <p>
-          å°‹æ‰¾å¯¦ç¿’èˆ‡çœŸå¯¦ä¸–ç•Œçš„å°ˆæ¡ˆç¶“é©—ï¼Œå­¸ç¿’å¦‚ä½•è§£æ±ºçœŸæ­£çš„å•é¡Œã€‚
+          ´M§ä¹ê²ß»P¯u¹ê¥@¬Éªº±M®×¸gÅç¡A¾Ç²ß¦p¦ó¸Ñ¨M¯u¥¿ªº°İÃD¡C
         </p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-year">YEAR 04 â€” 2029 / 2030</div>
+        <div class="timeline-year">YEAR 04 ¡X 2029 / 2030</div>
         <h3>Become a Professional</h3>
         <p>
-          æ•´ç†å››å¹´çš„ä½œå“èˆ‡ç¶“é©—ï¼Œæº–å‚™é€²å…¥è·å ´ã€‚
+          ¾ã²z¥|¦~ªº§@«~»P¸gÅç¡A·Ç³Æ¶i¤JÂ¾³õ¡C
         </p>
       </div>
 
@@ -555,7 +660,7 @@
   <!-- CONTACT -->
   <section id="contact" class="contact">
 
-    <div class="eyebrow">04 â€” Contact</div>
+    <div class="eyebrow">04 ¡X Contact</div>
 
     <h2>
       Let's create<br>
@@ -563,7 +668,7 @@
     </h2>
 
     <p>
-      å¦‚æœä½ æƒ³èˆ‡æˆ‘åˆä½œã€äº¤æµæƒ³æ³•ï¼Œæ­¡è¿èˆ‡æˆ‘è¯çµ¡ã€‚
+      ¦pªG§A·Q»P§Ú¦X§@¡B¥æ¬y·Qªk¡AÅwªï»P§ÚÁpµ¸¡C
     </p>
 
     <div class="buttons" style="justify-content:center;">
@@ -572,7 +677,7 @@
       </a>
 
       <a href="https://github.com/" class="button">
-        GitHub â†—
+        GitHub ¡ù
       </a>
     </div>
 
@@ -580,9 +685,63 @@
 
 
   <footer>
-    <span>Â© 2026 Your Name</span>
+    <span>c 2026 Your Name</span>
     <span>Designed & Built by Me.</span>
   </footer>
+
+  <!-- ¼Æ¦ì¬ì§Ş·§½× ²Ó³¡­¶­± Modal ¼u¥Xµøµ¡ -->
+  <div class="modal-overlay" id="tech-modal">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+
+      <div class="modal-body">
+        <h3>¼Æ¦ì¬ì§Ş·§½×</h3>
+        <span class="subtitle">Introduction to Digital Technology ¡X ¤j¤@¥²­×/¿ï­×½Òµ{°O¿ı</span>
+
+        <h4>½Òµ{Â²¤¶</h4>
+        <p>
+          ¥»½Òµ{¦®¦b«Øºc¤j¤@·s¥Í¹ï·í¥N¼Æ¦ì¬ì§Ş¥ş»ªªº²z¸Ñ¡A¥]§tµwÅé¬[ºc¡B³nÅé¤uµ{¡Bºô¸ô³q°T¥H¤Î³Ì·s«eªu¬ì§Ş¡]AI¡B¶³ºİ¹Bºâ»P¸ê¦w·§©À¡^¡A¨Ãµ²¦Xºô­¶«Ø¸mªº¹ê§@±M®×¡C
+        </p>
+
+        <h4>­«ÂI¾Ç²ß³æ¤¸</h4>
+        <ul>
+          <li><strong>­pºâ¾÷°òÂ¦¡G</strong> ÅŞ¿è¹h¡BCPU ¬[ºc»P°O¾ĞÅéºŞ²z¾÷¨î¡C</li>
+          <li><strong>ºô­¶«eºİµo®i¡G</strong> HTML5 »y·N¤Æ¼ĞÅÒ¡BCSS3 §G§½»P RWD ÅTÀ³¦¡³]­p¡C</li>
+          <li><strong>ºô­¶ºô¸ô­ì²z¡G</strong> HTTP/HTTPS ¨ó©w¡BDNS ¸ÑªR»P Web ¦øªA¾¹¹B§@·§©À¡C</li>
+          <li><strong>²{¥N¬ì§ŞÁÍ¶Õ¡G</strong> ¤H¤u´¼¼zÀ³¥Î¡]GenAI¡^¡B°Ï¶ôÃì»P¸ê°T¦w¥ş¹ê°È¡C</li>
+        </ul>
+
+        <h4>¹ê§@»P¦¨ªG</h4>
+        <p>
+          §¹¦¨¤F­Ó¤H§@«~¶°ºô­¶ªº¶}µo»P³¡¸p¡A¾Ç²ß¹B¥Î Git ª©±±¤u¨ã¡A¨Ã¦¨¥\¹ê§@¤¬°Ê¦¡«eºİ¤¶­±³]­p¡C
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript ±±¨î¼uµ¡ÅŞ¿è -->
+  <script>
+    const techCard = document.getElementById('digital-tech-card');
+    const modal = document.getElementById('tech-modal');
+    const closeBtn = document.getElementById('modal-close-btn');
+
+    // ÂIÀ»¥d¤ù¶}±Ò¼uµ¡
+    techCard.addEventListener('click', () => {
+      modal.classList.add('active');
+    });
+
+    // ÂIÀ»Ãö³¬«ö¶sÃö³¬¼uµ¡
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    // ÂIÀ»­I´ºªÅ¥Õ³BÃö³¬¼uµ¡
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  </script>
 
 </body>
 </html>
