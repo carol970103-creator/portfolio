@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的個人作品集 | Portfolio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+      background: #0b0f19;
+      color: #f5f7fa;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* 導覽列 */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #7c9cff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #b8c0d4;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    /* 首頁 */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 24px 60px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: #5d5fef;
+      filter: blur(180px);
+      opacity: 0.25;
+      top: -150px;
+      right: -100px;
+    }
+
+    .hero-content {
+      max-width: 1100px;
+      width: 100%;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-block;
+      color: #8ea6ff;
+      background: rgba(124, 156, 255, 0.1);
+      border: 1px solid rgba(124, 156, 255, 0.25);
+      padding: 7px 14px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 1;
+      letter-spacing: -4px;
+      margin-bottom: 28px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #7c9cff, #b18cff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: #aeb6c9;
+      font-size: 1.2rem;
+      margin-bottom: 35px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 13px 22px;
+      border-radius: 10px;
+      border: 1px solid #30384d;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: #7c9cff;
+      color: #0b0f19;
+      border-color: #7c9cff;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    /* 共用區塊 */
+    section {
+      max-width: 1100px;
+      margin: auto;
+      padding: 100px 24px;
+    }
+
+    .section-label {
+      color: #7c9cff;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 45px;
+    }
+
+    /* 關於我 */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .about-text {
+      color: #aeb6c9;
+      font-size: 1.05rem;
+    }
+
+    .about-text p {
+      margin-bottom: 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .stat {
+      padding: 25px;
+      background: #131a2a;
+      border: 1px solid #222b40;
+      border-radius: 16px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 2rem;
+      color: #fff;
+    }
+
+    .stat span {
+      color: #8993aa;
+    }
+
+    /* 技能 */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .skill {
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: #131a2a;
+      border: 1px solid #29344b;
+      color: #cbd2e1;
+    }
+
+    /* 作品 */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .project {
+      background: #131a2a;
+      border: 1px solid #222b40;
+      border-radius: 18px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .project:hover {
+      transform: translateY(-6px);
+      border-color: #53689f;
+    }
+
+    .project-image {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(135deg, #202b50, #171d31);
+      font-size: 3rem;
+    }
+
+    .project-content {
+      padding: 24px;
+    }
+
+    .project-content h3 {
+      margin-bottom: 10px;
+    }
+
+    .project-content p {
+      color: #929db4;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    .project-link {
+      color: #8ea6ff;
+      font-size: 0.9rem;
+    }
+
+    /* 聯絡 */
+    .contact {
+      text-align: center;
+      background: #111827;
+      border-radius: 25px;
+      padding: 70px 30px;
+    }
+
+    .contact p {
+      color: #9ca7bb;
+      margin-bottom: 25px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: #69748b;
+      padding: 40px 20px;
+      border-top: 1px solid #1c2435;
+    }
+
+
+    /* 數位科技概論詳細頁 */
+    .course-detail {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(11, 15, 25, 0.97);
+      overflow-y: auto;
+      padding: 90px 24px 50px;
+    }
+
+    .course-detail.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .course-detail-inner {
+      max-width: 900px;
+      margin: auto;
+      background: #131a2a;
+      border: 1px solid #29344b;
+      border-radius: 22px;
+      padding: 42px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .course-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .course-detail h2 {
+      margin-bottom: 8px;
+      font-size: 2.4rem;
+    }
+
+    .course-subtitle {
+      color: #929db4;
+    }
+
+    .close-course {
+      border: 1px solid #3a4660;
+      background: #202b40;
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .close-course:hover {
+      background: #303d59;
+      transform: translateY(-2px);
+    }
+
+    .course-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 32px;
+    }
+
+    .course-info {
+      background: #0f1523;
+      border: 1px solid #222b40;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .course-info strong {
+      display: block;
+      color: #8ea6ff;
+      margin-bottom: 5px;
+    }
+
+    .course-info span {
+      color: #d2d8e5;
+    }
+
+    .course-section {
+      margin-top: 28px;
+    }
+
+    .course-section h3 {
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .course-section p,
+    .course-section li {
+      color: #aeb6c9;
+    }
+
+    .course-section ul {
+      padding-left: 22px;
+    }
+
+    .course-back {
+      margin-top: 35px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 800px) {
+      .course-detail-inner {
+        padding: 28px 22px;
+      }
+
+      .course-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .course-detail-header {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 導覽列 -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">PORTFOLIO.</div>
+
+      <ul class="nav-links">
+        <li><a href="#about">關於我</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#projects">作品</a></li>
+        <li><a href="#contact">聯絡</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-content">
+
+      <div class="tag">👋 大一學生 · 持續學習中</div>
+
+      <h1>
+        Hi, I'm<br>
+        <span class="gradient-text">Your Name.</span>
+      </h1>
+
+      <p>
+        我是一名正在探索設計、科技與創意的大學生。
+        這個網站將記錄我的學習歷程、實驗與作品，
+        並持續成長為一名能解決問題的創作者。
+      </p>
+
+      <div class="buttons">
+        <a class="btn btn-primary" href="#projects">
+          查看我的作品 →
+        </a>
+
+        <a class="btn" href="#contact">
+          聯絡我
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 關於我 -->
+  <section id="about">
+
+    <div class="section-label">01 · About</div>
+    <h2>關於我</h2>
+
+    <div class="about">
+
+      <div class="about-text">
+        <p>
+          嗨，我是 <strong>Your Name</strong>，
+          目前就讀於某某大學。
+        </p>
+
+        <p>
+          我目前正在學習程式設計、網頁開發與數位創作。
+          比起只學習理論，我更喜歡把學到的東西實際做出來。
+        </p>
+
+        <p>
+          這個 Portfolio 會陪著我從大一一路成長到大四，
+          記錄每一次專案、失敗、嘗試與進步。
+        </p>
+      </div>
+
+      <div class="stats">
+
+        <div class="stat">
+          <strong>01</strong>
+          <span>目前年級</span>
+        </div>
+
+        <div class="stat">
+          <strong>∞</strong>
+          <span>學習可能性</span>
+        </div>
+
+        <div class="stat">
+          <strong>01+</strong>
+          <span>目前作品</span>
+        </div>
+
+        <div class="stat">
+          <strong>2026</strong>
+          <span>開始建立 Portfolio</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- 技能 -->
+  <section id="skills">
+
+    <div class="section-label">02 · Skills</div>
+    <h2>我正在學習</h2>
+
+    <div class="skills">
+      <div class="skill">HTML</div>
+      <div class="skill">CSS</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">Python</div>
+      <div class="skill">Git / GitHub</div>
+      <div class="skill">UI / UX</div>
+      <div class="skill">Problem Solving</div>
+      <div class="skill">Teamwork</div>
+    </div>
+
+  </section>
+
+  <!-- 作品 -->
+  <section id="projects">
+
+    <div class="section-label">03 · Projects</div>
+    <h2>我的作品</h2>
+
+    <div class="projects">
+
+      <article class="project">
+
+        <div class="project-image">
+          🌊
+        </div>
+
+        <div class="project-content">
+          <h3>水與生活</h3>
+
+          <p>
+            一個以生活科學為主題的網頁作品，
+            將複雜的資訊轉換成容易理解的內容。
+          </p>
+
+          <a class="project-link" href="#">
+            View Project →
+          </a>
+        </div>
+
+      </article>
+
+      <article class="project">
+
+        <div class="project-image">
+          💡
+        </div>
+
+        <div class="project-content">
+          <h3>Coming Soon</h3>
+
+          <p>
+            下一個作品正在製作中。
+            未來會放上課堂專題、個人實驗與 Side Project。
+          </p>
+
+          <a class="project-link" href="#">
+            Coming Soon →
+          </a>
+        </div>
+
+      </article>
+
+      <article class="project">
+
+        <div class="project-image">
+          🚀
+        </div>
+
+        <div class="project-content">
+          <h3>Future Project</h3>
+
+          <p>
+            大學四年的學習旅程才剛開始，
+            更多作品將會陸續加入。
+          </p>
+
+          <a class="project-link" href="#">
+            Stay Tuned →
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- 聯絡 -->
+  <section id="contact">
+
+    <div class="contact">
+
+      <div class="section-label">04 · Contact</div>
+
+      <h2>一起做點有趣的東西？</h2>
+
+      <p>
+        如果你想了解我的作品、合作或交流，歡迎聯絡我。
+      </p>
+
+      <a
+        class="btn btn-primary"
+        href="mailto:your-email@example.com"
+      >
+        Email Me
+      </a>
+
+    </div>
+
+  </section>
+
+  <footer>
+    © 2026 Your Name · Built with HTML & CSS
+  </footer>
+
+
+  <!-- 數位科技概論詳細頁 -->
+  <div id="courseDetail" class="course-detail" aria-hidden="true">
+    <div class="course-detail-inner">
+
+      <div class="course-detail-header">
+        <div>
+          <div class="section-label">Course · Digital Technology</div>
+          <h2>數位科技概論</h2>
+          <p class="course-subtitle">我的大一課程學習紀錄</p>
+        </div>
+
+        <button class="close-course" onclick="closeCourse()">✕ 關閉</button>
+      </div>
+
+      <div class="course-info-grid">
+        <div class="course-info">
+          <strong>課程類型</strong>
+          <span>大一基礎課程</span>
+        </div>
+        <div class="course-info">
+          <strong>學習方向</strong>
+          <span>數位科技與資訊應用</span>
+        </div>
+        <div class="course-info">
+          <strong>學習狀態</strong>
+          <span>持續學習中</span>
+        </div>
+      </div>
+
+      <div class="course-section">
+        <h3>📚 課程介紹</h3>
+        <p>
+          數位科技概論是我大一階段接觸數位科技的重要課程。
+          透過這門課，我開始認識數位科技的基本概念，
+          並了解科技如何融入日常生活與學習。
+        </p>
+      </div>
+
+      <div class="course-section">
+        <h3>💡 學習內容</h3>
+        <ul>
+          <li>認識數位科技的基本概念</li>
+          <li>了解資訊科技在生活中的應用</li>
+          <li>培養數位工具與科技的使用能力</li>
+          <li>透過課堂實作練習網頁與數位創作</li>
+        </ul>
+      </div>
+
+      <div class="course-section">
+        <h3>📝 我的學習心得</h3>
+        <p>
+          作為一名大一新生，這門課讓我開始思考科技不只是課本上的知識，
+          而是可以實際運用在生活、學習與創作上的工具。
+          這次製作個人網站，也是我將課堂所學實際應用的一次練習。
+        </p>
+      </div>
+
+      <a class="btn btn-primary course-back" onclick="closeCourse()">
+        ← 回到作品集
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    function openCourse() {
+      const detail = document.getElementById("courseDetail");
+      detail.classList.add("show");
+      detail.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeCourse() {
+      const detail = document.getElementById("courseDetail");
+      detail.classList.remove("show");
+      detail.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    // 按 ESC 也可以關閉詳細頁
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closeCourse();
+      }
+    });
+  </script>
+
+</body>
+</html>
